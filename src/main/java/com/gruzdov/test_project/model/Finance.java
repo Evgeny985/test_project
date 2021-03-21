@@ -18,7 +18,7 @@ public class Finance {
     private Long id;
 
     @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern = "dd.MM.yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date publicationDate;
 
     @Column(name = "instrument")

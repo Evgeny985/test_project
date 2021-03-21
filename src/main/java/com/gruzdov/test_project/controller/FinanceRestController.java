@@ -10,34 +10,38 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class FinanceController {
+@RequestMapping("finances")
+public class FinanceRestController {
+
+    private final FinanceService financeService;
 
     @Autowired
-    private FinanceService financeService;
+    public FinanceRestController(FinanceService financeService) {
+        this.financeService = financeService;
+    }
 
-    @GetMapping("/finances")
+    @GetMapping
     public ResponseEntity<List<Finance>> getAllFinance() {
         return ResponseEntity.ok().body(financeService.getAllFinance());
     }
 
-    @GetMapping("/finances/{id}")
-    public ResponseEntity<Finance> getFinanceById(@PathVariable long id) {
+    @GetMapping("{id}")
+    public ResponseEntity<Finance> getFinanceById(@PathVariable Long id) {
         return ResponseEntity.ok().body(financeService.getFinanceById(id));
     }
 
-    @PostMapping("/finances")
+    @PostMapping
     public ResponseEntity<Finance> createFinance(@RequestBody Finance finance) {
         return ResponseEntity.ok().body(this.financeService.createFinance(finance));
     }
 
-    @PutMapping("/finances/{id}")
-    public ResponseEntity<Finance> updateFinance(@PathVariable long id, @RequestBody Finance finance) {
-        finance.setId(id);
+    @PutMapping
+    public ResponseEntity<Finance> updateFinance(@RequestBody Finance finance) {
         return ResponseEntity.ok().body(this.financeService.updateFinance(finance));
     }
 
-    @DeleteMapping("/finances/{id}")
-    public HttpStatus deleteFinance(@PathVariable long id) {
+    @DeleteMapping("{id}")
+    public HttpStatus deleteFinance(@PathVariable Long id) {
         this.financeService.deleteFinance(id);
         return HttpStatus.OK;
     }

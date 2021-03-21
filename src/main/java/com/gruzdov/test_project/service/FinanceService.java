@@ -12,8 +12,8 @@ public interface FinanceService {
 
     List<Finance> getAllFinance();
 
-    Finance getFinanceById(long financeId);
+    Finance getFinanceById(Long financeId);
 
-    void deleteFinance(long financeId);
+    void deleteFinance(Long financeId);
 }
 
