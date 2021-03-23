@@ -30,36 +30,34 @@ public class FinanceServiceImpl implements FinanceService {
 
     @Override
     public Finance updateFinance(Finance finance) {
-        Optional<Finance> financeDb = this.financeRepository.findById(finance.getId());
+        Long financeId = finance.getId();
+        Optional<Finance> financeDb = financeRepository.findById(financeId);
         if (financeDb.isPresent()) {
-            Finance financeUpdate = financeRepository.save(finance);
             log.info("IN update - finance: {} successfully updated", finance);
-            return financeUpdate;
+            return financeRepository.save(finance);
         } else {
-            throw new ResourceNotFoundException("Resource with ID : " + finance.getId() + " not found");
+            log.warn("IN update - finance by id: {} no found", financeId);
+            throw new ResourceNotFoundException(financeId);
         }
     }
 
     @Override
     public List<Finance> getAllFinance() {
-        List<Finance> financeList = this.financeRepository.findAll();
-        if (!financeList.isEmpty()) {
-            log.info("IN getAll - finance: {} finance found", financeList.size());
-            return financeList;
-        } else {
-            throw new ResourceNotFoundException("Resource is empty");
-        }
+        List<Finance> financeList = financeRepository.findAll();
+        log.info("IN getAll - finance: {} finance found", financeList.size());
+        return financeList;
     }
 
     @Override
     public Finance getFinanceById(Long financeId) {
-        Optional<Finance> financeDb = this.financeRepository.findById(financeId);
+        Optional<Finance> financeDb = financeRepository.findById(financeId);
         if (financeDb.isPresent()) {
             Finance result = financeDb.get();
             log.info("IN findById - finance: {} found by id: {}", result, financeId);
             return result;
         } else {
-            throw new ResourceNotFoundException("Resource with ID : " + financeId + " not found");
+            log.warn("IN findById - finance by id: {} no found ", financeId);
+            throw new ResourceNotFoundException(financeId);
         }
     }
 
@@ -67,10 +65,11 @@ public class FinanceServiceImpl implements FinanceService {
     public void deleteFinance(Long financeId) {
         Optional<Finance> financeDb = this.financeRepository.findById(financeId);
         if (financeDb.isPresent()) {
-            this.financeRepository.delete(financeDb.get());
+            financeRepository.deleteById(financeId);
             log.info("IN delete - finance with id: {} successfully deleted", financeId);
         } else {
-            throw new ResourceNotFoundException("Resource with ID : " + financeId + " not found");
+            log.warn("IN delete - finance by id: {} no found ", financeId);
+            throw new ResourceNotFoundException(financeId);
         }
     }
 }
