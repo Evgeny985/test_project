@@ -32,17 +32,17 @@ public class FinanceRestController {
 
     @PostMapping
     public ResponseEntity<Finance> createFinance(@RequestBody Finance finance) {
-        return ResponseEntity.ok().body(this.financeService.createFinance(finance));
+        return ResponseEntity.ok().body(financeService.createFinance(finance));
     }
 
     @PutMapping
     public ResponseEntity<Finance> updateFinance(@RequestBody Finance finance) {
-        return ResponseEntity.ok().body(this.financeService.updateFinance(finance));
+        return ResponseEntity.ok().body(financeService.updateFinance(finance));
     }
 
     @DeleteMapping("{id}")
     public HttpStatus deleteFinance(@PathVariable Long id) {
-        this.financeService.deleteFinance(id);
+        financeService.deleteFinance(id);
         return HttpStatus.OK;
     }
 }

@@ -19,10 +19,11 @@ public class Finance {
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "dd-MM-yyyy")
+    @Column(name = "publication_date")
     private Date publicationDate;
 
-    @Column(name = "instrument")
-    private String instrument;
+    @Column(name = "securities")
+    private String securities;
 
     @Column(name = "coast")
     private BigDecimal coast;
